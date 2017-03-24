@@ -2,15 +2,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Pizza : MonoBehaviour {
+public class Pizza : MonoBehaviour
+{
+    public Wand left;
+    public Wand right;
+    public GameObject pizzaBody;
+    public SphereCollider pizzaCol;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    public void Start()
+    {
+        //TODO: przyporzadkowac kontrolery
+        pizzaCol = GetComponent<SphereCollider>();
+    }
+
+    void EatPizza()
+    {
+        DestroyObject(pizzaBody, 5);
+    }
+
+    void OnCollisionEnter(SphereCollider col)
+    {
+        EatPizza();
+    }
 }
