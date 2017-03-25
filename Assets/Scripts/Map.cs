@@ -65,7 +65,7 @@ public class Map : MonoBehaviour
             var bul = Instantiate(bullet, v, transform.rotation, transform);
             var dir = headset.transform.position - bul.transform.position;
             dir = dir.normalized;
-            bul.GetComponent<Rigidbody>().AddForce(dir * 100);
+            bul.GetComponent<Rigidbody>().AddForce(dir * 400);
             yield return new WaitForSeconds(b);
         }
     }

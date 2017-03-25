@@ -10,7 +10,8 @@ public class GameManager : MonoBehaviour
     public GameObject map;
     public Wand left;
     public Wand right;
-    public int life = 3;
+    public Camera mainCam;
+    public int life = 10;
     public int points = 0;
     public int pizzas_lvl = 0;
     private List<Pizza> pizzaList;
@@ -39,7 +40,7 @@ public class GameManager : MonoBehaviour
     {
         while (true)
         {
-            if (CheckIfOnLava(left) || CheckIfOnLava(right))
+            if (CheckIfOnLava(mainCam))
             {
                 life -= 1;
                 yield return new WaitForSeconds(time);
@@ -48,12 +49,12 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private bool CheckIfOnLava(Wand wand)
+    private bool CheckIfOnLava(Camera cam)
     {
         foreach(Transform child in map.transform)
         {
             if (child.tag == "Lava")
-                if (Mathf.Abs(child.position.z - wand.transform.position.z) < 0.5 || Mathf.Abs(child.position.x - wand.transform.position.x) < 0.5)
+                if (Mathf.Abs(child.position.z - cam.transform.position.z) < 0.5 || Mathf.Abs(child.position.x - cam.transform.position.x) < 0.5)
                     return true;
         }
         return false;
