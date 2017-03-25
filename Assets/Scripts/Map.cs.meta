@@ -1,10 +1,14 @@
 fileFormatVersion: 2
 guid: 0316cd8a56e3f5744932468cd6de3bd2
-timeCreated: 1490404405
+timeCreated: 1490406777
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - lava: {fileID: 2100000, guid: 1d8495b784224ca4f95c5d53778b25bf, type: 2}
+  - earth: {fileID: 2100000, guid: c57520e516621ba49ad89da856498059, type: 2}
+  - terrainPrefab: {fileID: 1986263440123592, guid: 7b49add5a02dfd444ba1783c5d69ef98,
+      type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
