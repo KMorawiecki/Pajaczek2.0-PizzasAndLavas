@@ -6,12 +6,16 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public Text lifeCounter;
+    public Text pointCounter;
     public Timer timer;
     public GameObject map;
+    public GameObject pointsPanel;
+    public GameObject lifePanel;
+    public GameObject timePanel;
     public Wand left;
     public Wand right;
     public Camera mainCam;
-    public int life = 10;
+    public int life = 30;
     public int points = 0;
     public int pizzas_lvl = 0;
     private List<Pizza> pizzaList;
@@ -34,8 +38,9 @@ public class GameManager : MonoBehaviour
 	void Update ()
     {
         if (life <= 0)
-            //GameOver();
+            GameOver();
         lifeCounter.text = "Life: " + life.ToString();
+        pointCounter.text = "Points: " + points.ToString();
         if (Input.GetKey(KeyCode.RightArrow))
         {
             map.transform.Translate(new Vector3(-5 * Time.deltaTime, 0, 0));
@@ -72,7 +77,7 @@ public class GameManager : MonoBehaviour
         foreach(Transform child in map.transform)
         {
             if (child.tag == "Lava")
-                if (Mathf.Abs(child.position.z - cam.transform.position.z) < 0.5 || Mathf.Abs(child.position.x - cam.transform.position.x) < 0.5)
+                if (Mathf.Abs(child.position.z - cam.transform.position.z) < 0.25 || Mathf.Abs(child.position.x - cam.transform.position.x) < 0.25)
                     return true;
         }
         return false;
@@ -81,8 +86,11 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         messagePanel.SetActive(true);
-        messagePanel.GetComponentInChildren<Text>().text = "You lose";
+        messagePanel.GetComponentInChildren<Text>().text = "You lose. You\n have gained: " + points.ToString()+ " points";
         StopAllCoroutines();
+        pointsPanel.SetActive(false);
+        lifePanel.SetActive(false);
+        timePanel.SetActive(false);
 
 
         foreach (Transform gameobject in map.transform)
@@ -116,13 +124,13 @@ public class GameManager : MonoBehaviour
         Transform thirdPizza = earthPlaces[transInt];
         earthPlaces.RemoveAt(transInt);
         GameObject pizza_no1;
-        pizza_no1 = Instantiate(pizzaPrefab, new Vector3(firstPizza.position.x, firstPizza.position.y + 1, firstPizza.position.z), Quaternion.identity) as GameObject;
+        pizza_no1 = Instantiate(pizzaPrefab, new Vector3(firstPizza.position.x, firstPizza.position.y + 0.5f, firstPizza.position.z), Quaternion.identity) as GameObject;
         var pizza_no1_instance = pizza_no1.GetComponent<Pizza>();
         GameObject pizza_no2;
-        pizza_no2 = Instantiate(pizzaPrefab, new Vector3(secondPizza.position.x, secondPizza.position.y + 1, secondPizza.position.z), Quaternion.identity) as GameObject;
+        pizza_no2 = Instantiate(pizzaPrefab, new Vector3(secondPizza.position.x, secondPizza.position.y + 0.5f, secondPizza.position.z), Quaternion.identity) as GameObject;
         var pizza_no2_instance = pizza_no1.GetComponent<Pizza>();
         GameObject pizza_no3;
-        pizza_no3 = Instantiate(pizzaPrefab, new Vector3(thirdPizza.position.x, thirdPizza.position.y + 1, thirdPizza.position.z), Quaternion.identity) as GameObject;
+        pizza_no3 = Instantiate(pizzaPrefab, new Vector3(thirdPizza.position.x, thirdPizza.position.y + 0.5f, thirdPizza.position.z), Quaternion.identity) as GameObject;
         var pizza_no3_instance = pizza_no1.GetComponent<Pizza>();
     }
 
