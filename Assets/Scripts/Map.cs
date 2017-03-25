@@ -12,6 +12,7 @@ public class Map : MonoBehaviour
     int b;
     int x, y, z;
     public GameObject bullet;
+    public GameObject headset;
 
     // Use this for initialization
     void Start()
@@ -23,9 +24,10 @@ public class Map : MonoBehaviour
             {
                 child.GetComponent<MeshRenderer>().material = lava;
                 child.tag = "Lava";
-                child.gameObject.AddComponent<ParticleSystem>();
-                child.GetComponent<ParticleSystem>().startSize = 0.05f;
-                child.GetComponent<ParticleSystemRenderer>().material = lava;
+                //child.gameObject.AddComponent<ParticleSystem>();
+                //child.GetComponent<ParticleSystem>().startSize = 0.05f;
+                //child.GetComponent<ParticleSystemRenderer>().material = lava;
+                child.gameObject.GetComponent<BoxCollider>(); 
             }
             if (a == 1)
             {
@@ -60,7 +62,10 @@ public class Map : MonoBehaviour
         {
             b = Random.Range(10, 15);
             Vector3 v = new Vector3(Random.Range(0, 20), 2, Random.Range(0, 20)); //Why it's instantiated in another position?
-            Instantiate(bullet, v, transform.rotation, transform); //+Add force
+            var bul = Instantiate(bullet, v, transform.rotation, transform);
+            var dir = headset.transform.position - bul.transform.position;
+            dir = dir.normalized;
+            bul.GetComponent<Rigidbody>().AddForce(dir * 100);
             yield return new WaitForSeconds(b);
         }
     }
