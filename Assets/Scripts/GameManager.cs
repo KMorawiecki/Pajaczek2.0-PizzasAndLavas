@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public Text lifeCounter;
-    public Text timer;
+    public Timer timer;
     public GameObject map;
     public Wand left;
     public Wand right;
@@ -16,13 +16,14 @@ public class GameManager : MonoBehaviour
     public int pizzas_lvl = 0;
     private List<Pizza> pizzaList;
     public GameObject pizzaPrefab;
+    public Map Map;
+    private Vector3 startingVector = new Vector3(0f,0f,0f);
 
     private float invincibleTime = 2;
     private IEnumerator coroutine;
 
 	void Start ()
     {
-        points = pizzas_lvl = 0;
         coroutine = WatchingSteps(invincibleTime);
         StartCoroutine(coroutine);
         pizzaList = new List<Pizza>();
@@ -60,7 +61,7 @@ public class GameManager : MonoBehaviour
         return false;
     }
 
-    private void GameOver()
+    public void GameOver()
     {
         //TODO: plan game over 
     }
@@ -78,7 +79,7 @@ public class GameManager : MonoBehaviour
     {
         List<Transform> earthPlaces = new List<Transform>();
         foreach (Transform child in map.transform)
-            if (child.tag == "Earth" && child.transform.position != Vector3.zero)
+            if (child.tag == "Earth" && child.transform.position != startingVector)
                 earthPlaces.Add(child);
         int transInt = Random.Range(0, earthPlaces.Count - 1);
         Transform firstPizza = earthPlaces[transInt];
@@ -98,5 +99,20 @@ public class GameManager : MonoBehaviour
         GameObject pizza_no3;
         pizza_no3 = Instantiate(pizzaPrefab, new Vector3(thirdPizza.position.x, thirdPizza.position.y + 1, thirdPizza.position.z), Quaternion.identity) as GameObject;
         var pizza_no3_instance = pizza_no1.GetComponent<Pizza>();
+    }
+
+    public void LevelUp()
+    {
+        foreach(Transform child in map.transform)
+            if(Mathf.Abs(child.position.x - mainCam.transform.position.x) < 0.5 && Mathf.Abs(child.position.z - mainCam.transform.position.z) < 0.5)
+            {
+                startingVector = new Vector3(child.position.x, child.position.y, child.position.z);
+                Map.Generate(startingVector);
+                break;
+            }
+        PlacePizzas();
+        int timePoints = (int)timer.timer;
+        points += timePoints; 
+        timer.timer = 20f;
     }
 }

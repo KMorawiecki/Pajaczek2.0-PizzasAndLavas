@@ -9,10 +9,13 @@ public class Pizza : MonoBehaviour
     public GameObject pizzaBody;
     public GameObject gameManager;
     public GameObject timer;
+    private GameManager manager;
+    
 
     void Start()
     {
         gameManager = GameObject.Find("GameManager");
+        manager = gameManager.GetComponent<GameManager>();
         timer = GameObject.Find("Timer");
     }
 
@@ -31,16 +34,10 @@ public class Pizza : MonoBehaviour
     }
     void AddPoints()
     {
-        gameManager.GetComponent<GameManager>().points++;
-        gameManager.GetComponent<GameManager>().pizzas_lvl++;
-        if (gameManager.GetComponent<GameManager>().pizzas_lvl % 3 == 0 && timer.GetComponent<Timer>().timer > 0)
-        {
-            gameManager.GetComponent<GameManager>().points++;
-            gameManager.GetComponent<GameManager>().pizzas_lvl = 0;
-        }
-        if (timer.GetComponent<Timer>().timer == 0)
-        {
-            gameManager.GetComponent<GameManager>().pizzas_lvl = 0;
-        }
+        manager.points++;
+        manager.pizzas_lvl++;
+        if (manager.pizzas_lvl == 3)
+            manager.LevelUp();
+
     }
 }

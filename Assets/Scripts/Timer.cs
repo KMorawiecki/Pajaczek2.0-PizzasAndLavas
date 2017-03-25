@@ -4,8 +4,9 @@ using UnityEngine.UI;
 
 public class Timer : MonoBehaviour
 {
-    public float timer = 10;
+    public float timer = 20;
     public Text time;
+    public GameManager Manager;
 
     void FixedUpdate()
     {
@@ -16,8 +17,7 @@ public class Timer : MonoBehaviour
         }
         else
         {
-            timer = 0;
-            time.text = timer.ToString();
+            Manager.GameOver();
         }
     }
 }
