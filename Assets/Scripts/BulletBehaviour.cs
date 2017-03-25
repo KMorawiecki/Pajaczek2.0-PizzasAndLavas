@@ -17,23 +17,16 @@ public class BulletBehaviour : MonoBehaviour {
         cleft = GameObject.Find("Controller (left)");
 	}
 	
-	// Update is called once per frame
-	void Update () {
 
-    }
-    
-    void OnCollisionEnter(Collision collision)
-    {
-        if(collision.gameObject.tag == "Wand")
-        {
-            Destroy(gameObject);
-        }
-
-    }
     void OnTriggerEnter(Collider collider)
     {
+        if (collider.gameObject.tag == "Wand") {
+            Debug.Log("Wand");
+            Destroy(gameObject);
+        }
         if (collider.gameObject.tag == "Bang")
         {
+            Debug.Log("Bang");
             var life = gameManager.GetComponent<GameManager>().GetLife();
             gameManager.GetComponent<GameManager>().SetLife(life - 1); //Doesn't work
             Destroy(gameObject);

@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     public Wand right;
     public int life = 3;
     public int points = 0;
+    public int pizzas_lvl = 0;
     private List<Pizza> pizzaList;
     public GameObject pizzaPrefab;
 
@@ -20,6 +21,7 @@ public class GameManager : MonoBehaviour
 
 	void Start ()
     {
+        points = pizzas_lvl = 0;
         coroutine = WatchingSteps(invincibleTime);
         StartCoroutine(coroutine);
         pizzaList = new List<Pizza>();
@@ -51,7 +53,7 @@ public class GameManager : MonoBehaviour
         foreach(Transform child in map.transform)
         {
             if (child.tag == "Lava")
-                if (Mathf.Abs(child.position.z - wand.transform.position.z) < 0.25 || Mathf.Abs(child.position.y - wand.transform.position.y) < 0.25)
+                if (Mathf.Abs(child.position.z - wand.transform.position.z) < 0.5 || Mathf.Abs(child.position.x - wand.transform.position.x) < 0.5)
                     return true;
         }
         return false;

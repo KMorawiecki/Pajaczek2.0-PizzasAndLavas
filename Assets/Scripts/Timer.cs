@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class Timer : MonoBehaviour
 {
-    private float timer = 10;
+    public float timer = 10;
     public Text time;
 
     void FixedUpdate()
