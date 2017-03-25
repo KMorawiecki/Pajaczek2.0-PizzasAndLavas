@@ -9,6 +9,9 @@ public class Map : MonoBehaviour
     public Material earth;
     public GameObject terrainPrefab;
     int a;
+    int b;
+    int x, y, z;
+    public GameObject bullet;
 
     // Use this for initialization
     void Start()
@@ -20,6 +23,9 @@ public class Map : MonoBehaviour
             {
                 child.GetComponent<MeshRenderer>().material = lava;
                 child.tag = "Lava";
+                child.gameObject.AddComponent<ParticleSystem>();
+                child.GetComponent<ParticleSystem>().startSize = 0.05f;
+                child.GetComponent<ParticleSystemRenderer>().material = lava;
             }
             if (a == 1)
             {
@@ -39,11 +45,23 @@ public class Map : MonoBehaviour
                 var terrain = Instantiate(terrainPrefab, child.position, child.rotation, transform);
             }
         }
+        StartCoroutine(Bullets());
     }
 
     // Update is called once per frame
     void Update()
     {
 
+    }
+
+    private IEnumerator Bullets()
+    {
+        while (true)
+        {
+            b = Random.Range(10, 15);
+            Vector3 v = new Vector3(Random.Range(0, 20), 2, Random.Range(0, 20)); //Why it's instantiated in another position?
+            Instantiate(bullet, v, transform.rotation, transform); //+Add force
+            yield return new WaitForSeconds(b);
+        }
     }
 }
