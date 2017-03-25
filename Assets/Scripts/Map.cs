@@ -25,13 +25,18 @@ public class Map : MonoBehaviour
             {
                 child.GetComponent<MeshRenderer>().material = earth;
                 child.tag = "Earth";
-                //var terrain = Instantiate(terrainPrefab, child.position, child.rotation, transform);
             }
             if (child.transform.position == Vector3.zero)
             {
                 child.GetComponent<MeshRenderer>().material = earth;
                 child.tag = "Earth";
-                //Instantiate(terrainPrefab, child.position, child.rotation, transform);
+            }
+        }
+        foreach (Transform child in transform)
+        {
+            if(child.gameObject.tag == "Earth")
+            {
+                var terrain = Instantiate(terrainPrefab, child.position, child.rotation, transform);
             }
         }
     }
