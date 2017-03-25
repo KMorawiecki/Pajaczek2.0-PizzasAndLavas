@@ -23,6 +23,11 @@ public class Map : MonoBehaviour {
                 child.GetComponent<MeshRenderer>().material = earth;
                 child.tag = "Earth";
             }
+            if(child.transform.position == Vector3.zero)
+            {
+                child.GetComponent<MeshRenderer>().material = earth;
+                child.tag = "Earth";
+            }
         }
     }
 	
