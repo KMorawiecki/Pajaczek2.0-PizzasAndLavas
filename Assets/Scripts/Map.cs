@@ -20,6 +20,7 @@ public class Map : MonoBehaviour
             {
                 child.GetComponent<MeshRenderer>().material = lava;
                 child.tag = "Lava";
+                child.gameObject.GetComponent<BoxCollider>(); 
             }
             if (a == 1)
             {
