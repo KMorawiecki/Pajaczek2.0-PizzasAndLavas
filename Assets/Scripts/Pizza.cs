@@ -13,8 +13,11 @@ public class Pizza : MonoBehaviour
         DestroyObject(transform.gameObject);
     }
 
-    void OnCollisionEnter(Collision col)
+    void Update()
     {
-        EatPizza();
+        if (Mathf.Abs(left.transform.position.z - transform.position.z) < 0.1 && Mathf.Abs(left.transform.position.x - transform.position.x) < 0.1)
+            EatPizza();
+        if (Mathf.Abs(right.transform.position.z - transform.position.z) < 0.1 && Mathf.Abs(right.transform.position.x - transform.position.x) < 0.1)
+            EatPizza();
     }
 }

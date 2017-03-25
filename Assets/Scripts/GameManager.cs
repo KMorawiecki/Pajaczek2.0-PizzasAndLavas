@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour
     public Wand right;
     public int life = 3;
     public int points = 0;
+    private List<Pizza> pizzaList;
+    public GameObject pizzaPrefab;
 
     private float invincibleTime = 2;
     private IEnumerator coroutine;
@@ -20,7 +22,9 @@ public class GameManager : MonoBehaviour
     {
         coroutine = WatchingSteps(invincibleTime);
         StartCoroutine(coroutine);
-	}
+        pizzaList = new List<Pizza>();
+        PlacePizzas();
+    }
 	
 	void Update ()
     {
@@ -65,5 +69,31 @@ public class GameManager : MonoBehaviour
     public void SetLife(int life)
     {
         this.life = life;
+    }
+
+    private void PlacePizzas()
+    {
+        List<Transform> earthPlaces = new List<Transform>();
+        foreach (Transform child in map.transform)
+            if (child.tag == "Earth" && child.transform.position != Vector3.zero)
+                earthPlaces.Add(child);
+        int transInt = Random.Range(0, earthPlaces.Count - 1);
+        Transform firstPizza = earthPlaces[transInt];
+        earthPlaces.RemoveAt(transInt);
+        transInt = Random.Range(0, earthPlaces.Count - 1);
+        Transform secondPizza = earthPlaces[transInt];
+        earthPlaces.RemoveAt(transInt);
+        transInt = Random.Range(0, earthPlaces.Count - 1);
+        Transform thirdPizza = earthPlaces[transInt];
+        earthPlaces.RemoveAt(transInt);
+        GameObject pizza_no1;
+        pizza_no1 = Instantiate(pizzaPrefab, new Vector3(firstPizza.position.x, firstPizza.position.y + 1, firstPizza.position.z), Quaternion.identity) as GameObject;
+        var pizza_no1_instance = pizza_no1.GetComponent<Pizza>();
+        GameObject pizza_no2;
+        pizza_no2 = Instantiate(pizzaPrefab, new Vector3(secondPizza.position.x, secondPizza.position.y + 1, secondPizza.position.z), Quaternion.identity) as GameObject;
+        var pizza_no2_instance = pizza_no1.GetComponent<Pizza>();
+        GameObject pizza_no3;
+        pizza_no3 = Instantiate(pizzaPrefab, new Vector3(thirdPizza.position.x, thirdPizza.position.y + 1, thirdPizza.position.z), Quaternion.identity) as GameObject;
+        var pizza_no3_instance = pizza_no1.GetComponent<Pizza>();
     }
 }
