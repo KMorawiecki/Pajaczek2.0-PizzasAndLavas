@@ -1,17 +1,23 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI; 
+﻿using UnityEngine;
+using System.Collections;
+using UnityEngine.UI;
 
 public class Timer : MonoBehaviour
 {
     private float timer = 10;
-    private Text time;
-    	
-	// Update is called once per frame
-	void FixedUpdate ()
+    public Text time;
+
+    void FixedUpdate()
     {
-        timer -= Time.deltaTime;
-        time.text = timer.ToString(); 
-	}
+        if (timer > 0)
+        {
+            timer -= Time.deltaTime;
+            time.text = timer.ToString();
+        }
+        else
+        {
+            timer = 0;
+            time.text = timer.ToString();
+        }
+    }
 }
