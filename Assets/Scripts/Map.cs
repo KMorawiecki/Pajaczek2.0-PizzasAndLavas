@@ -14,18 +14,12 @@ public class Map : MonoBehaviour
     int x, y, z;
     public GameObject bullet;
     public GameObject headset;
-    public Vector3 vector = new Vector3(0f, 0f, 0f);
+    public Vector3 vector = new Vector3(0, 0, 0);
 
     // Use this for initialization
     void Start()
     {
         Generate(vector);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     private IEnumerator Bullets()

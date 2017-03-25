@@ -17,7 +17,7 @@ public class Timer : MonoBehaviour
         }
         else
         {
-            Manager.GameOver();
+            Manager.LevelUp();
         }
     }
 }

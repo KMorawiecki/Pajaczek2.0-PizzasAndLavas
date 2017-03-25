@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     public GameObject pizzaPrefab;
     public Map Map;
     private Vector3 startingVector = new Vector3(0f,0f,0f);
+    public GameObject messagePanel;
 
     private float invincibleTime = 2;
     private IEnumerator coroutine;
@@ -33,9 +34,25 @@ public class GameManager : MonoBehaviour
 	void Update ()
     {
         if (life <= 0)
-            GameOver();
+            //GameOver();
         lifeCounter.text = "Life: " + life.ToString();
-	}
+        if (Input.GetKey(KeyCode.RightArrow))
+        {
+            map.transform.Translate(new Vector3(-5 * Time.deltaTime, 0, 0));
+        }
+        if (Input.GetKey(KeyCode.LeftArrow))
+        {
+            map.transform.Translate(new Vector3(5 * Time.deltaTime, 0, 0));
+        }
+        if (Input.GetKey(KeyCode.DownArrow))
+        {
+            map.transform.Translate(new Vector3(0, 0, 5 * Time.deltaTime));
+        }
+        if (Input.GetKey(KeyCode.UpArrow))
+        {
+            map.transform.Translate(new Vector3(0, 0, -5 * Time.deltaTime));
+        }
+    }
 
     private IEnumerator WatchingSteps(float time)
     {
@@ -63,7 +80,15 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
-        //TODO: plan game over 
+        messagePanel.SetActive(true);
+        messagePanel.GetComponentInChildren<Text>().text = "You lose";
+        StopAllCoroutines();
+
+
+        foreach (Transform gameobject in map.transform)
+        {
+            Destroy(gameobject.gameObject);
+        }
     }
 
     public int GetLife()
